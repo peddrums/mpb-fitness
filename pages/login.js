@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useAuth0 } from '@auth0/auth0-react'
 
 import { useReducer } from "react";
 
@@ -16,11 +17,12 @@ const loginReducer = (state, action) => {
 };
 
 export default function Login() {
+    const { loginWithRedirect } = useAuth0()
   const [formState, dispatch] = useReducer(loginReducer, initialState);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(formState);
+    
     const { email, password } = formState
     try {
       const { data } = await axios.post("/api/users/login", {
